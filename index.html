@@ -1,80 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="sw">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello, Deno</title>
-  <link rel="preload" href="https://demo-styles.deno.deno.net/fonts/Moranga-Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="https://demo-styles.deno.deno.net/fonts/Moranga-Medium.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="https://demo-styles.deno.deno.net/fonts/Recursive_Variable.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="https://demo-styles.deno.deno.net/styles.css">
-  <style>
-    img {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malipo - Website Yangu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- HAPA NDIPO UNAWEKA SCRIPT YA PAYMENT GATEWAY YAKO -->
+    <!-- Mfano kwa Paystack: <script src="https://js.paystack.co/v1/inline.js"></script> -->
+    <!-- Mfano kwa Flutterwave: <script src="https://checkout.flutterwave.com/v3.js"></script> -->
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
 </head>
+<body class="min-h-screen flex items-center justify-center p-4">
 
-<body>
-    <main>
-      <section>
-        <a href="https://deno.com/deploy">
-        </a>
-      <h1>
-        <p>
-          Hello, Deno!
-        </p>
-      </h1>
-      <p>
-        This little example is being served by <a href="https://deno.com/">Deno</a>.
-        You can run it locally or in porduction on <a href="https://deno.com/deploy">Deno Deploy</a> or other hosting platforms.
-      </p>
-      <ul>
-        <li>Run it locally with<code>deno task dev</code></li>
-        <li>Deploy it to <a href="https://deno.com/deploy">Deno Deploy</a> via the CLI by running<code>deno deploy</code></li>
-        <li>Run it locally and share it publically by running <code>deno deploy --connected</code></li>
-      </ul>
-    </section>
-      <hr>
-    <section>
-      <h2>What's next?</h2>
-      <p>
-        You can clone this example and deploy it to Deno Deploy in just a few clicks
-        <a href="https://app.deno.com/new?clone=https://github.com/denoland/examples&path=hello-world"><img src="https://deno.com/button" alt="Deploy on Deno"/></a>
-      </p>
-      <ul>
-        <li>
-          <a href="https://docs.deno.com/examples">More examples in the Deno Docs</a>
-        </li>
-        <li>
-          <a href="https://deno.com/deploy">Deno Deploy Early Access</a>
-        </li>
-      </ul>
-    </section>
-    </main>
-    <hr>
-    <footer>
-      <section>
-      <ul class="flex-btwn">
-        <li>
-          <a href="https://deno.com">BlueSky</a>
-        </li>
-        <li>
-          <a href="https://deno.com">Twitter</a>
-        </li>
-        <li>
-          <a href="https://deno.com">YouTube</a>
-        </li>
-        <li>
-          <a href="https://deno.com">Newsletter</a>
-        </li>
-        <li>
-          <a href="https://deno.com">Deno</a>
-        </li>
-      </ul>
-      </section>
-    </footer>
+    <!-- KADI YA BIDHAA NA MALIPO -->
+    <div class="glass-card w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
+        
+        <!-- Picha ya Bidhaa / Huduma -->
+        <div class="h-48 bg-blue-600 relative flex items-center justify-center">
+            <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <i class="fas fa-crown text-6xl text-yellow-400 drop-shadow-lg z-10"></i>
+            <div class="absolute bottom-4 left-6 z-10 text-white">
+                <h2 class="text-2xl font-bold">Kujiunga VIP Group</h2>
+                <p class="text-blue-100 text-sm">Ufikiaji wa maisha (Lifetime Access)</p>
+            </div>
+        </div>
+
+        <!-- Fomu ya Malipo -->
+        <div class="p-8">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-4">
+                <span class="text-gray-500 font-medium">Kiasi cha Kulipia:</span>
+                <span class="text-3xl font-bold text-gray-800">TZS 15,000</span>
+            </div>
+
+            <form id="paymentForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Jina Kamili</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="customer-name" required placeholder="Andika jina lako" 
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-800 px-10 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Barua Pepe (Email)</label>
+                    <div class="relative">
+                        <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="email" id="customer-email" required placeholder="mfano@email.com" 
+                            class="w-full bg-gray-50 border border-gray-200 text-gray-800 px-10 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
+
+                <!-- KITUFE CHA KULIPIA -->
+                <button type="submit" id="pay-button" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl active:scale-95 transition-all mt-4 flex justify-center items-center gap-2">
+                    <i class="fas fa-lock text-sm"></i> LIPA SASA
+                </button>
+            </form>
+
+            <div class="mt-6 flex items-center justify-center gap-4 text-gray-400 text-2xl">
+                <i class="fab fa-cc-visa hover:text-blue-600 transition-colors"></i>
+                <i class="fab fa-cc-mastercard hover:text-red-500 transition-colors"></i>
+                <i class="fas fa-mobile-alt hover:text-green-500 transition-colors" title="Mobile Money"></i>
+            </div>
+            <p class="text-center text-[10px] text-gray-400 mt-2 font-medium uppercase tracking-wider">Malipo Yanalindwa Kikamilifu</p>
+        </div>
+    </div>
+
+    <!-- MODAL YA UJUMBE WA MAFANIKIO (SUCCESS) AU KUFELI -->
+    <div id="status-modal" class="hidden fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center transform scale-95 transition-transform duration-300" id="modal-content">
+            <div id="modal-icon" class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4">
+                <!-- Icon itawekwa na JavaScript -->
+            </div>
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+            <p id="modal-message" class="text-gray-500 mb-6"></p>
+            <button onclick="closeModal()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl hover:bg-gray-700 transition-colors">
+                Funga
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // SIKILIZA WAKITI MTU ANABONYEZA "LIPA SASA"
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Zuia page kurefresh
+
+            // Chukua taarifa alizojaza mteja
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            const amount = 15000; // Kiasi cha kulipia
+
+            // Badilisha muonekano wa kitufe kuonesha inaload
+            const btn = document.getElementById('pay-button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inawasiliana na Benki...';
+            btn.disabled = true;
+
+            // HAPA NDIPO UNAITA FUNCTION YA PAYMENT GATEWAY YAKO
+            // Nimetengeneza function ya mfano (triggerPaymentGateway) inayoigiza jinsi inavyofanya kazi
+            
+            setTimeout(() => {
+                triggerPaymentGateway(name, email, amount, function(success) {
+                    // Baada ya malipo kukamilika, rudisha kitufe katika hali ya kawaida
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            }, 1500); // Tunasubiri sekunde 1.5 kuigiza network
+        });
+
+        // =================================================================
+        // SEHEMU YA KUUNGANISHA PAYMENT GATEWAY YAKO HALISI
+        // =================================================================
+        function triggerPaymentGateway(name, email, amount, callback) {
+            
+            /* * MAELEKEZO KWAKO KAKA:
+             * Hapa utafuta hii code yangu ya mfano, na utaweka code ya Gateway yako.
+             * * KAMA NI PAYSTACK, code yako itakuwa hivi:
+             * * let handler = PaystackPop.setup({
+             * key: 'WEKA_PUBLIC_KEY_YAKO_HAPA', // Muhimu: Tumia PUBLIC key tu kwenye HTML
+             * email: email,
+             * amount: amount * 100, // Paystack inatumia senti
+             * currency: 'TZS',
+             * callback: function(response){
+             * showModal('success', 'Malipo Yamefanikiwa!', 'Namba ya Kumbukumbu: ' + response.reference);
+             * callback(true);
+             * },
+             * onClose: function(){
+             * showModal('error', 'Malipo Yamekatishwa', 'Hujamaliza kufanya malipo.');
+             * callback(false);
+             * }
+             * });
+             * handler.openIframe();
+             * */
+
+            // --- HII NI CODE YA KUIGIZA (DEMO) KWA AJILI YA PREVIEW YAKO ---
+            // Tunaigiza kama mteja amelipa kikamilifu
+            const isPaymentSuccessful = true; // Badilisha kuwa false kuona ujumbe wa kufeli
+
+            if(isPaymentSuccessful) {
+                const ref = 'REF-' + Math.floor(Math.random() * 100000000);
+                showModal('success', 'Malipo Yamefanikiwa!', `Asante ${name}. Malipo yako ya TZS ${amount} yamepokelewa. Kumbukumbu: ${ref}`);
+            } else {
+                showModal('error', 'Malipo Yameshindikana', 'Tafadhali angalia salio lako au jaribu tena baadae.');
+            }
+            callback(isPaymentSuccessful);
+            // ----------------------------------------------------------------
+        }
+
+        // =================================================================
+        // FUNCTION ZA KUDHIBITI MODAL (UJUMBE WA MAFANIKIO/KUFELI)
+        // =================================================================
+        const modal = document.getElementById('status-modal');
+        const modalContent = document.getElementById('modal-content');
+
+        function showModal(status, title, message) {
+            const iconContainer = document.getElementById('modal-icon');
+            
+            if(status === 'success') {
+                iconContainer.className = 'w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 bg-green-100 text-green-500';
+                iconContainer.innerHTML = '<i class="fas fa-check text-4xl"></i>';
+            } else {
+                iconContainer.className = 'w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 bg-red-100 text-red-500';
+                iconContainer.innerHTML = '<i class="fas fa-times text-4xl"></i>';
+            }
+
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+
+            modal.classList.remove('hidden');
+            // Timeout fupi kuruhusu transition ifanye kazi
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Subiri animation iishe ndio ifiche
+        }
+    </script>
 </body>
 </html>
